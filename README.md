@@ -17,3 +17,6 @@
     * --fields="medias:multiple" for multiple images 
     * --fields="medias:single" for single image 
     * **/
+
+    command for generate crud
+    -> php artisan generate:crud {model} {--module=} {--disable=} {--fields=} {--methods=}
