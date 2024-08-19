@@ -1,0 +1,13 @@
+{
+    "name": "mausam1999/kazi-crud",
+    "description": "Crud Solution Quick Code",
+    "type": "project",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Kazi\\Crud\\": "src/"
+        }
+    }
+}
