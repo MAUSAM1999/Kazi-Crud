@@ -5,7 +5,7 @@
     *
     * --disable="migration,model,create_request,update_request,list_resource,detail_resource,controller,route" ----- optional
     * --fields="name:string,email:string,password:string" ----- optional
-    * --methods="index,getAll,store,update,delete,show,changeStatus,getMetaData" ---- optional 
+    * --methods="index,getAll,store,update,delete,show,changeStatus,getMetaData,export" ---- optional 
     * always use {model} name is small case in singular word ---- required 
     * soft delete, extra, created_by,updated_by are set in model and migration by default 
     * 
