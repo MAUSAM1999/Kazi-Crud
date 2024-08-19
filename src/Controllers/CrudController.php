@@ -3,6 +3,7 @@
 namespace Kazi\Crud\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Str;
 use Kazi\Crud\Exports\CommonExport;
 use Kazi\Crud\Helper\ApiResponse;
 use Kazi\Crud\Traits\Super;
@@ -258,7 +259,7 @@ class CrudController extends BaseController
         if ($request->has('exportName')) {
             $exportName = $request->get('exportName') . time() . '.xlsx';
         } else {
-            $exportName = 'Export-File' . phpStr::slug($reflection->getShortName()) . time() . '.xlsx';
+            $exportName = Str::slug($reflection->getShortName()) . time() . '.xlsx';
         }
         $path = 'export/' . $exportName;
         $export = Excel::store($exportClass, $path, 'minio');
