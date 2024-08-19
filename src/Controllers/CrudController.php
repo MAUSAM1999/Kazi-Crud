@@ -6,6 +6,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Str;
 use Kazi\Crud\Exports\CommonExport;
 use Kazi\Crud\Helper\ApiResponse;
+use Kazi\Crud\Helper\GlobalHelper;
 use Kazi\Crud\Traits\Super;
 use Carbon\Carbon;
 use Exception;
@@ -277,10 +278,12 @@ class CrudController extends BaseController
 
     public function getMetaData()
     {
-        $columns = $this->model::COLUMNS;
-        $fields = $this->model::FIELDS;
-        $table = $this->model::TABLE;
-        $filters = $this->model::FILTERS;
+        $service = new GlobalHelper();
+
+        $columns = $service->constant_exists($this->model, 'COLUMNS') ? $this->model::COLUMNS : [];
+        $fields = $service->constant_exists($this->model, 'FIELDS') ? $this->model::FIELDS : [];
+        $table = $service->constant_exists($this->model, 'TABLE') ? $this->model::TABLE : [];
+        $filters = $service->constant_exists($this->model, 'FILTERS') ? $this->model::FILTERS : [];
 
         return ApiResponse::successData([
             'columns' => $columns,
