@@ -1,13 +1,13 @@
 {
-    "name": "yajtech/soci-crud-backend",
-    "description": "Crud Solution Quick Code",
-    "type": "project",
-    "license": "MIT",
-    "minimum-stability": "dev",
-    "require": {},
-    "autoload": {
-        "psr-4": {
-            "Kazi\\Crud\\": "src/"
-        }
+  "name": "kazi/crud",
+  "description": "Crud Solution Quick Code",
+  "type": "project",
+  "license": "MIT",
+  "minimum-stability": "dev",
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "Kazi\\Crud\\": "src/"
     }
+  }
 }
