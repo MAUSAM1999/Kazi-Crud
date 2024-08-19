@@ -3,6 +3,7 @@
 namespace Kazi\Crud\Traits;
 
 use Illuminate\Support\Facades\DB;
+use Plank\Mediable\Media;
 
 trait CrudEventListener
 {
@@ -37,6 +38,46 @@ trait CrudEventListener
         static::updating(function ($model) {
             if (request()->has('updated_by')) {
                 $model->updated_by = auth()?->id() ?? null;
+            }
+        });
+
+        static::created(function ($model) {
+            if (request()->has('upload')) {
+                $tag = 'upload_' . strtolower(class_basename($model));
+                $upload_request = request()->get('upload');
+                $media = Media::findOrFail($upload_request['id'] ?? $upload_request);
+                $model->syncMedia($media, [$tag]);
+            }
+
+            if (request()->has('upload_multiple') && count(request()->get('upload_multiple')) > 0) {
+                $tag = 'upload_multiple_' . strtolower(class_basename($model));
+                foreach (request()->get('upload_multiple') as $upload) {
+                    $media = Media::findOrFail($upload['id'] ?? $upload);
+                    $model->attachMedia($media, [$tag]);
+                }
+            }
+        });
+
+        static::updated(function ($model) {
+
+            if (request()->has('upload')) {
+                $tag = 'upload_' . strtolower(class_basename($model));
+                $upload_request = request()->get('upload');
+                $media = Media::findOrFail($upload_request['id'] ?? $upload_request);
+                $model->syncMedia($media, [$tag]);
+            }
+
+            if (request()->has('upload_multiple') && count(request()->get('upload_multiple')) > 0) {
+                $tag = 'upload_multiple_' . strtolower(class_basename($model));
+                $oldMedias = $model->getMedia($tag);
+                foreach ($oldMedias as $oldMedia) {
+                    $model->detachMedia($oldMedia->id);
+                }
+
+                foreach (request()->get('upload_multiple') as $upload) {
+                    $media = Media::findOrFail($upload['id'] ?? $upload);
+                    $model->attachMedia($media, [$tag]);
+                }
             }
         });
     }
