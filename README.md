@@ -20,3 +20,9 @@
 
     command for generate crud
     -> php artisan generate:crud {model} {--module=} {--disable=} {--fields=} {--methods=}
+
+    to use module feature please install Module Package from laravel-modules
+    -> https://nwidart.com/laravel-modules/v6/installation-and-setup
+
+    to use media feature please install Media form Plank Meduable
+    -> https://laravel-mediable.readthedocs.io/en/latest/installation.html 
