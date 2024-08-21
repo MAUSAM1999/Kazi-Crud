@@ -57,14 +57,21 @@ class GenerateCrudCommand extends Command
         $fields = $service->removeDefaultFields($fields);
 
         // module verification
-//        $module_path = "Modules/{$module}";
-//        if (is_dir($module_path)) {
-        foreach ($enabledFeatures as $feature) {
-            $service->{'handle' . Str::studly($feature)}($name, $pluralModel, $fields, $methods, $module);
+        if ($module) {
+            $module_path = "Modules/{$module}";
+            if (is_dir($module_path)) {
+                foreach ($enabledFeatures as $feature) {
+                    $service->{'handle' . Str::studly($feature)}($name, $pluralModel, $fields, $methods, $module);
+                }
+            } else {
+                $this->error("\n\nThe module '{$module}' does not exist.");
+            }
+        } else {
+            foreach ($enabledFeatures as $feature) {
+                $service->{'handle' . Str::studly($feature)}($name, $pluralModel, $fields, $methods, null);
+            }
         }
-//        } else {
-//            $this->error("\n\nThe module '{$module}' does not exist.");
-//        }
+
 
         $this->info("\n\nCommand Executed Successfully");
     }

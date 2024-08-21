@@ -13,7 +13,7 @@ class CrudOperationMigrationService
         // Generate migration file name
         $migrationName = date('Y_m_d_His') . '_create_' . Str::snake($name) . '_table.php';
         if ($module) {
-            $migrationPath = base_path('Modules/' . $module . '/Database/migrations/tenant');
+            $migrationPath = base_path('Modules/' . $module . '/Database/migrations');
             // Check if the directory exists
             if (!is_dir($migrationPath)) {
                 mkdir($migrationPath, 0777, true);

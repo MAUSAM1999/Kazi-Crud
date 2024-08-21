@@ -10,14 +10,27 @@ class CrudOperationModelService
     {
         $fillableFields = $this->generateFillableFields($fields);
 
-        // Generate model content
-        $modelContent = $this->generateModelContent($name, $fillableFields);
-
         // Save the model file
-        $modelPath = app_path("Models/{$name}.php");
+        $file_name = "{$name}.php";
+        if ($module) {
+            $modelPath = base_path('Modules/' . $module . '/App/Models');
+            // Check if the directory exists
+            if (!is_dir($modelPath)) {
+                mkdir($modelPath, 0777, true);
+            }
+            // Generate model content
+            $modelContent = $this->generateModelContent($name, $fillableFields, "Modules\\$module\\App\\Models");
+            $modelPath = $modelPath . '/' . $file_name;
+        } else {
+            // Generate model content
+            $modelContent = $this->generateModelContent($name, $fillableFields, 'App\\Models');
+            $modelPath = app_path('Models/' . $file_name);
+        }
+
+        // save model path with content
         file_put_contents($modelPath, $modelContent);
 
-        return "Models/{$name}.php";
+        return $modelPath;
     }
 
     protected function generateFillableFields($fieldsArray): string
@@ -31,7 +44,7 @@ class CrudOperationModelService
         return implode(', ', $fillableFields);
     }
 
-    protected function generateModelContent($name, $fillableFields): string
+    protected function generateModelContent($name, $fillableFields, $namespace): string
     {
         $className = Str::studly($name);
         $fillableFieldsCustom = explode(', ', $fillableFields);
@@ -124,14 +137,13 @@ class CrudOperationModelService
         return <<<EOT
    <?php
 
-     namespace App\Models;
+     namespace $namespace;
 
      use Illuminate\Database\Eloquent\Factories\HasFactory;
      use Illuminate\Database\Eloquent\Model;
      use Kazi\Crud\Traits\CrudModel;
      use Kazi\Crud\Traits\CrudEventListener;
      use \Illuminate\Database\Eloquent\SoftDeletes;
-     use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
      class $className extends Model
      {

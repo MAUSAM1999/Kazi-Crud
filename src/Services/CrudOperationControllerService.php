@@ -6,25 +6,37 @@ use Illuminate\Support\Str;
 
 class CrudOperationControllerService
 {
-    public function makeController($name, $modelName): string
+    public function makeController($name, $modelName, $module): string
     {
-        $model = "App\\Models\\{$name}";
-        $list_resource = "App\\Http\\Resources\\{$name}ListResource";
-        $detail_resource = "App\\Http\\Resources\\{$name}DetailResource";
-        $create_request = "App\\Http\\Requests\\{$name}CreateRequest";
-        $update_request = "App\\Http\\Requests\\{$name}UpdateRequest";
-        $controllerPath = app_path('Http/Controllers/' . $modelName . '.php');
+        if ($module) {
+            $controllerPath = base_path('Modules/' . $module . '/App/Http/Controllers');
+            $model = "Modules\\$module\\App\\Models\\{$name}";
+            $list_resource = "Modules\\$module\\App\\Http\\Resources\\{$name}ListResource";
+            $detail_resource = "Modules\\$module\\App\\Http\\Resources\\{$name}DetailResource";
+            $create_request = "Modules\\$module\\App\\Http\\Requests\\{$name}CreateRequest";
+            $update_request = "Modules\\$module\\App\\Http\\Requests\\{$name}UpdateRequest";
+            $controllerPath = $controllerPath . '/' . $modelName . '.php';
 
-        // Generate the controller content
-        $controllerContent = $this->generateControllerContent($modelName, $model, $list_resource, $detail_resource, $create_request, $update_request);
+            // Generate the controller content
+            $controllerContent = $this->generateControllerContent($modelName, $model, $list_resource, $detail_resource, $create_request, $update_request, "Modules\\$module\\App\\Http\\Controllers");
+        } else {
+            $model = "App\\Models\\{$name}";
+            $list_resource = "App\\Http\\Resources\\{$name}ListResource";
+            $detail_resource = "App\\Http\\Resources\\{$name}DetailResource";
+            $create_request = "App\\Http\\Requests\\{$name}CreateRequest";
+            $update_request = "App\\Http\\Requests\\{$name}UpdateRequest";
+            $controllerPath = app_path('Http/Controllers/' . $modelName . '.php');
 
+            // Generate the controller content
+            $controllerContent = $this->generateControllerContent($modelName, $model, $list_resource, $detail_resource, $create_request, $update_request, "App\\Http\\Controllers");
+        }
         // Save the controller file
         file_put_contents($controllerPath, $controllerContent);
 
-        return 'Http/Controllers/' . $modelName . '.php';
+        return $controllerPath;
     }
 
-    protected function generateControllerContent($name, $model, $list_resource, $detail_resource, $create_request, $update_request): string
+    protected function generateControllerContent($name, $model, $list_resource, $detail_resource, $create_request, $update_request, $namespace): string
     {
         $className = Str::studly($name);
         $parsed_model = basename(str_replace('\\', '/', $model));
@@ -36,7 +48,7 @@ class CrudOperationControllerService
         return <<<EOT
 <?php
 
-namespace App\Http\Controllers;
+namespace $namespace;
 
 use Kazi\Crud\Controllers\CrudController;
 use $model;
