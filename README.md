@@ -96,6 +96,12 @@ To manage media fields:
 
 Ensure that your media logic is properly configured before using these features.
 
+## Update Kazi Crud Package With Latest Version
+
+```bash
+Composer Update
+```
+
 ### Additional Documentation
 
 For more detailed usage and advanced features, refer to the package's full documentation [here](https://sociair.com/).
