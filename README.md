@@ -1,28 +1,82 @@
-# kazi-crud-new
-# Kazi-Crud
+# Kazi Crud
 
-    /** Documentation for laravel 11.X 
-    *
-    * --disable="migration,model,create_request,update_request,list_resource,detail_resource,controller,route" ----- optional
-    * --fields="name:string,email:string,password:string" ----- optional
-    * --methods="index,getAll,store,update,delete,show,changeStatus,getMetaData,export" ---- optional 
-    * always use {model} name is small case in singular word ---- required 
-    * soft delete, extra, created_by,updated_by are set in model and migration by default 
-    * 
-    * to use modules path modules package should be installed 
-    * {module} name of module 
-    * 
-    * before using medias in filed make sure you have installed plank/Mediable package 
-    * make sure your all logic for media has been set, 
-    * --fields="medias:multiple" for multiple images 
-    * --fields="medias:single" for single image 
-    * **/
+**Kazi Crud** is a Laravel package designed to streamline CRUD operations with customizable options for controllers,
+models, and event listeners. This README will guide you through the installation, setup, and usage of the package.
 
-    command for generate crud
-    -> php artisan generate:crud {model} {--module=} {--disable=} {--fields=} {--methods=}
+## Installation and Setup
 
-    to use module feature please install Module Package from laravel-modules
-    -> https://nwidart.com/laravel-modules/v6/installation-and-setup
+### Step 1: Add the Repository
 
-    to use media feature please install Media form Plank Meduable
-    -> https://laravel-mediable.readthedocs.io/en/latest/installation.html 
+To include the Kazi Crud package, first add the repository to your `composer.json` file:
+
+```json
+"repositories": [
+    {
+      "type": "vcs",
+      "url": "https://gitlab.com/yajtech/soci-crud-backend.git"
+   }
+]
+```
+
+### Step 2: Install the Package
+
+Run the following command in your terminal to install the package:
+
+``` bash
+composer require kazi/crud
+```
+
+### Step 3: Register the Service Provider
+
+After installation, register the service provider in your config/app.php file:
+
+``` php
+'providers' => [
+    // Other Service Providers
+
+    \Kazi\Crud\Providers\CrudServiceProvider::class,
+],
+```
+
+Now, you're ready to use the classes provided by the package:
+  - Use CrudController for your controllers. 
+  - Use CrudModel trait for your models. 
+  - Use CrudEventListener trait for event listeners.
+
+
+## Usage
+
+### Generating CRUD Operations
+
+To generate CRUD operations, use the following Artisan command:
+
+```bash
+php artisan generate:crud {model} {--module=} {--disable=} {--fields=} {--methods=}
+```
+
+**Parameters:**
+
+- `{model}`: The name of the model (singular, lowercase) **(required)**
+- `--module=`: Specify the module name **(optional)**
+- `--disable=`: Disable specific components like migration, model, controller, etc. **(optional)**
+- `--fields=`: Define the fields for your model (e.g., `name:string,email:string`) **(optional)**
+- `--methods=`: Specify the methods to generate (e.g., `index,store,update`) **(optional)**
+
+### Notes:
+
+- Soft delete, `created_by`, and `updated_by` fields are set in the model and migration by default.
+- For media management, ensure you have installed the [Plank Mediable](https://laravel-mediable.readthedocs.io/en/latest/installation.html) package.
+- To use the module feature, install the [Laravel Modules](https://nwidart.com/laravel-modules/v6/installation-and-setup) package.
+
+### Media Management
+
+To manage media fields:
+
+- Use `--fields="medias:multiple"` for multiple images.
+- Use `--fields="medias:single"` for a single image.
+
+Ensure that your media logic is properly configured before using these features.
+
+### Additional Documentation
+
+For more detailed usage and advanced features, refer to the package's full documentation [here](https://sociair.com/).
