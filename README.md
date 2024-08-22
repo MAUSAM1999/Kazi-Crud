@@ -11,10 +11,10 @@ To include the Kazi Crud package, first add the repository to your `composer.jso
 
 ```json
 "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://gitlab.com/yajtech/soci-crud-backend.git"
-   }
+{
+"type": "vcs",
+"url": "https://gitlab.com/yajtech/soci-crud-backend.git"
+}
 ]
 ```
 
@@ -28,6 +28,8 @@ composer require kazi/crud
 
 ### Step 3: Register the Service Provider
 
+For Laravel Below Version 11 :
+
 After installation, register the service provider in your config/app.php file:
 
 ``` php
@@ -38,11 +40,26 @@ After installation, register the service provider in your config/app.php file:
 ],
 ```
 
-Now, you're ready to use the classes provided by the package:
-  - Use CrudController for your controllers. 
-  - Use CrudModel trait for your models. 
-  - Use CrudEventListener trait for event listeners.
+Laravel 11 above :
 
+After installation, register the service provider in your bootstrap/providers.php file:
+
+```php
+
+return [
+    App\Providers\AppServiceProvider::class,
+    
+    // kazi service providers
+    \Kazi\Crud\Providers\CrudServiceProvider::class
+];
+
+```
+
+Now, you're ready to use the classes provided by the package:
+
+- Use CrudController for your controllers.
+- Use CrudModel trait for your models.
+- Use CrudEventListener trait for event listeners.
 
 ## Usage
 
@@ -65,8 +82,10 @@ php artisan generate:crud {model} {--module=} {--disable=} {--fields=} {--method
 ### Notes:
 
 - Soft delete, `created_by`, and `updated_by` fields are set in the model and migration by default.
-- For media management, ensure you have installed the [Plank Mediable](https://laravel-mediable.readthedocs.io/en/latest/installation.html) package.
-- To use the module feature, install the [Laravel Modules](https://nwidart.com/laravel-modules/v6/installation-and-setup) package.
+- For media management, ensure you have installed
+  the [Plank Mediable](https://laravel-mediable.readthedocs.io/en/latest/installation.html) package.
+- To use the module feature, install
+  the [Laravel Modules](https://nwidart.com/laravel-modules/v6/installation-and-setup) package.
 
 ### Media Management
 
