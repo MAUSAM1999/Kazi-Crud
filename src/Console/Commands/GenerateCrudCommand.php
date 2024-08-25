@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 
 class GenerateCrudCommand extends Command
 {
-    /** Documentation for laravel 11.X
+    /** Documentation  for command
      *
      * --disable="migration,model,create_request,update_request,list_resource,detail_resource,controller,route" ----- optional
      * --fields="name:string,email:string,password:string" ----- optional
@@ -50,7 +50,7 @@ class GenerateCrudCommand extends Command
         $disabledFeatures = array_map('trim', $this->option('disable') ? explode(',', $this->option('disable')) : []);
         $enabledFeatures = array_diff($this->features, $disabledFeatures);
 
-        $this->info('Command Executing ...');
+        $this->info('Crud Command Executing ...');
         $service = new CrudOperationService();
 
         // remove default fields
@@ -73,6 +73,6 @@ class GenerateCrudCommand extends Command
         }
 
 
-        $this->info("\n\nCommand Executed Successfully");
+        $this->info("\n\nCrud Command Executed Successfully");
     }
 }
