@@ -107,9 +107,11 @@ php artisan generate:crud {model} {--module=} {--disable=} {--fields=} {--method
 
 - `{model}`: The name of the model (singular, lowercase) **(required)**
 - `--module=`: Specify the module name **(optional)**
-- `--disable=`: Disable specific components like migration, model, controller, etc. **(optional)**
+- `--disable=`: Disable specific components like (
+  e.g., `migration,model,create_request,update_request,list_resource,detail_resource,controller,route`)  **(optional)**
 - `--fields=`: Define the fields for your model (e.g., `name:string,email:string`) **(optional)**
-- `--methods=`: Specify the methods to generate (e.g., `index,store,update`) **(optional)**
+- `--methods=`: Specify the methods to generate (e.g., `index,getAll,store,update,delete,show,changeStatus,getMetaData`)
+  **(optional)**
 
 ### Notes:
 
@@ -119,14 +121,169 @@ php artisan generate:crud {model} {--module=} {--disable=} {--fields=} {--method
 - To use the module feature, install
   the [Laravel Modules](https://nwidart.com/laravel-modules/v6/installation-and-setup) package.
 
-### Media Management
-
-To manage media fields:
-
-- Use `--fields="medias:multiple"` for multiple images.
-- Use `--fields="medias:single"` for a single image.
-
 Ensure that your media logic is properly configured before using these features.
+
+## Model Management
+
+use Trait in each module, these below trait helps for filter, search and dynamic pagination and order by management
+
+```php
+<?php
+
+namespace App\Models;
+
+use Kazi\Crud\Traits\CrudEventListener;
+use Kazi\Crud\Traits\CrudModel;
+
+class ClassName extends Model
+{
+ use CrudModel, CrudEventListener;
+ 
+ // other code here 
+}
+```
+
+### Use `CrudEventListener`
+
+#### Model Manage Unique Fields
+
+If your model's database has unique fields, `CrudEventListener` can help manage them by adding random data to the unique
+column of a deleted row. This ensures that the same data can be reused in another row.
+
+Example:
+
+```json
+{
+  "unique_field": "original_value_deleted_123"
+}
+```
+
+#### Model Media Management
+
+To manage media uploads using `CrudEventListener`, add the following code to the FIELDS array in your model:
+
+```php
+const FIELDS = [
+
+    // Other fields here
+    
+    [
+        'name' => 'upload',
+        'type' => 'upload',
+        'label' => 'Upload',
+        'wrapper' => [
+            'class' => 'col-12'
+        ],
+        'rules' => [
+            'required' => true // This is optional; set to false if the field is not required
+        ]
+    ],
+    [
+        'name' => 'upload_multiple',
+        'type' => 'upload_multiple',
+        'label' => 'Upload Multiple',
+        'wrapper' => [
+            'class' => 'col-12'
+        ],
+        'rules' => [
+            'required' => true // This is optional; set to false if the field is not required
+        ]
+    ]
+];
+```
+
+#### Model COLUMN Configuration
+
+To define the columns for your CRUD table, you can use the following `COLUMNS` array configuration:
+
+```php
+const COLUMNS = [
+    [
+        'name' => 'sn', // used for field and name key in q-table component 
+        'label' => 'SN', // used for show label
+        'type' => 'sn', // type of column Example : sn, email, text etc.
+        'sortable' => true, // used for enable sortable 
+    ],
+     [
+        'name' => 'name',
+        'label' => 'Name',
+        'type' => 'text',
+        'sortable' => true,
+    ],
+    [
+        'name' => 'email',
+        'label' => 'Email',
+        'type' => 'email',
+        'sortable' => true,
+    ],   
+];
+```
+
+#### Model FIELDS Configuration
+
+The `FIELDS` array allows you to define the input fields for your forms. Below is an example configuration:
+
+```php
+const FIELDS = [
+    [
+        'name' => 'name', // fro v-model
+        'type' => 'text', // type of input
+        'label' => 'Name', // used for show label
+        'wrapper' => [  
+            'class' => 'col-6' // size used
+        ],
+        'rules' => [
+            'required' => true // false if filed is not required
+        ],
+    ],
+    [
+        'name' => 'role_id',
+        'type' => 'select_from_model',
+        'label' => 'Role',
+        'attribute' => 'name',
+        'wrapper' => [
+            'class' => 'col-12'
+        ],
+        'multiple' => true
+        'model' => "App\Models\Role",
+        'columns' => ['id', 'name', 'display_name'],
+        'rules' => [
+            'required' => true
+        ],
+    ],
+];
+```
+
+- `name` : The name of the field, used as the key for storing and retrieving the value. (v-model)
+- `type` : The input type (e.g., text, email, password, select_from_model).
+- `label` : The label displayed alongside the input field in the form.
+- `wrapper` : Defines the CSS class for the field's wrapper, allowing for layout customization (e.g., col-6 for
+  half-width fields, col-12 for full-width).
+- `rules` : Validation rules for the field (e.g., required).
+- `multiple` : Enable / Disable Select Multiple Data.
+- `attribute` : Specific to fields that map with label key in frontend
+  values from a model. entity specifies the related model, attribute defines the display attribute, and default is the
+  default value.
+- `model` : Specifies the model to be used for the select_from_model type field.
+- `columns` : Optional array specifying the columns to be retrieved from the model.
+
+#### Model Table Configuration
+
+The `TABLE` array defines the configuration options for the table displayed in your CRUD interface.
+
+```php
+const TABLE = [
+    'add_button' => true,
+    'refresh_button' => true,
+    'export_button' => true,
+    'filter_button' => true
+];
+```
+
+- `add_button` : Enables or disables the "Add" button.
+- `refresh_button` : Enables or disables the "Refresh" button.
+- `export_button` : Enables or disables the "Export" button.
+- `filter_button` : Enables or disables the "Filter" button.
 
 ## Update Kazi Crud Package With Latest Version
 
