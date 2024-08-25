@@ -139,9 +139,14 @@ class CrudOperationService
             $routeToCheck = "\nKazi\Crud\Helper\CrudRoute::generateRoutes('$modelName', " . $controllerPath . "::class);";
         }
 
-        // Check if the directory exists
-        if (!is_dir($path)) {
-            mkdir($path, 0777, true);
+        // Check if api.php exists as a file, or create it
+        if (!file_exists($path)) {
+            // Ensure the directory exists before creating the file
+            if (!is_dir(dirname($path))) {
+                mkdir(dirname($path), 0777, true);
+            }
+            // Create the api.php file
+            file_put_contents($path, "<?php\n\n");
         }
 
         $basicRoutePattern = "Kazi\Crud\Helper\CrudRoute::generateRoutes('$modelName', " . $controllerPath . "::class";
