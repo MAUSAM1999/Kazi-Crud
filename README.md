@@ -26,7 +26,39 @@ Run the following command in your terminal to install the package:
 composer require kazi/crud
 ```
 
-### Step 3: Register the Service Provider
+### Step 3: Register api.php file path in bootstrap/app.php
+
+Laravel 11 above :
+
+After installation, register the service provider in your bootstrap/providers.php file:
+
+```php
+
+<?php
+
+use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Configuration\Exceptions;
+use Illuminate\Foundation\Configuration\Middleware;
+
+return Application::configure(basePath: dirname(DIR))
+    ->withRouting(
+        web: DIR.'/../routes/web.php',
+        api: DIR.'/../routes/api.php', // add this file here so that application can register api.php as route file
+        commands: DIR.'/../routes/console.php',
+        health: '/up',
+    )
+    ->withMiddleware(function (Middleware $middleware) {
+        //
+    })
+    ->withExceptions(function (Exceptions $exceptions) {
+        //
+    })->create();
+
+```
+
+For Laravel Below Version 11 : [ no need to add any path as it is already registered in app service provider. ]
+
+### Step 4: Register the Service Provider
 
 For Laravel Below Version 11 :
 
