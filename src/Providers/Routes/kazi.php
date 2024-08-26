@@ -13,4 +13,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('dropdown', [YajTech\Crud\Controllers\Controller::class, 'dropdown']);
+Route::get('api/dropdown', [YajTech\Crud\Controllers\Controller::class, 'dropdown']);
