@@ -2,7 +2,6 @@
 
 namespace YajTech\Crud\Controllers;
 
-use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Str;
 use YajTech\Crud\Exports\CommonExport;
 use YajTech\Crud\Helper\ApiResponse;
@@ -18,7 +17,7 @@ use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use ReflectionClass;
 
-class CrudController extends BaseController
+class CrudController extends Controller
 {
     use Super;
 
@@ -128,11 +127,14 @@ class CrudController extends BaseController
             DB::beginTransaction();
             foreach ((array)$request->input('delete_rows') as $item) {
                 $model = $this->model::findOrFail($item);
-                if (method_exists(new $this->model(), 'afterDeleteProcess') && $model) {
-                    $model->afterDeleteProcess();
+                if (method_exists(new $this->model(), 'beforeDeleteProcess') && $model) {
+                    $model->beforeDeleteProcess();
                 }
                 if ($model) {
                     $model->delete();
+                }
+                if (method_exists(new $this->model(), 'afterDeleteProcess') && $model) {
+                    $model->afterDeleteProcess();
                 }
             }
 

@@ -1,4 +1,4 @@
-# YajTech Crud
+# YajTech Crud v1.0.0
 
 **YajTech Crud** is a Laravel package designed to streamline CRUD operations with customizable options for controllers,
 models, and event listeners. This README will guide you through the installation, setup, and usage of the package.
@@ -192,7 +192,7 @@ const FIELDS = [
 ];
 ```
 
-#### Model COLUMN Configuration
+### Model COLUMN Configuration
 
 To define the columns for your CRUD table, you can use the following `COLUMNS` array configuration:
 
@@ -219,7 +219,7 @@ const COLUMNS = [
 ];
 ```
 
-#### Model FIELDS Configuration
+### Model FIELDS Configuration
 
 The `FIELDS` array allows you to define the input fields for your forms. Below is an example configuration:
 
@@ -267,7 +267,7 @@ const FIELDS = [
 - `model` : Specifies the model to be used for the select_from_model type field.
 - `columns` : Optional array specifying the columns to be retrieved from the model.
 
-#### Model Table Configuration
+### Model Table Configuration
 
 The `TABLE` array defines the configuration options for the table displayed in your CRUD interface.
 
@@ -284,6 +284,132 @@ const TABLE = [
 - `refresh_button` : Enables or disables the "Refresh" button.
 - `export_button` : Enables or disables the "Export" button.
 - `filter_button` : Enables or disables the "Filter" button.
+
+### Model Example for Kazi
+
+```php
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Kazi\Crud\Traits\CrudModel;
+use Kazi\Crud\Traits\CrudEventListener;
+use \Illuminate\Database\Eloquent\SoftDeletes;
+
+class Kazi extends Model
+{
+    use HasFactory, CrudModel, SoftDeletes, CrudEventListener;
+
+    const COLUMNS = [
+        [
+            'name' => 'sn',
+            'label' => 'SN',
+            'align' => 'left',
+            'type' => 'text',
+            'sortable' => true,
+        ],
+        [
+            'name' => 'name',
+            'label' => 'Name',
+            'align' => 'left',
+            'type' => 'text',
+            'sortable' => true,
+        ],
+        [
+            'name' => 'display_name',
+            'label' => 'Display_name',
+            'align' => 'left',
+            'type' => 'text',
+            'sortable' => true,
+        ],
+    ];
+    const FIELDS = [
+        [
+            'name' => 'name',
+            'label' => 'Name',
+            'type' => 'text',
+            'wrapper' => [
+                'class' => 'col-6',
+            ],
+            'rules' => [
+                'required' => true,
+            ],
+        ],
+        [
+            'name' => 'display_name',
+            'label' => 'Display_name',
+            'type' => 'text',
+            'wrapper' => [
+                'class' => 'col-6',
+            ],
+            'rules' => [
+                'required' => true,
+            ],
+        ],
+    ];
+    const TABLE = [
+        'add_button' => true,
+        'refresh_button' => true,
+        'export_button' => true,
+        'filter_button' => true,
+    ];
+    const FILTERS = [
+        [
+            'name' => 'name',
+            'column' => 'name',
+            'type' => 'text',
+            'relation' => 'where',
+            'dense' => true,
+            'label' => 'Name',
+            'wrapper' => [
+                'class' => 'col-3',
+            ],
+        ],
+        [
+            'name' => 'display_name',
+            'column' => 'display_name',
+            'type' => 'text',
+            'relation' => 'where',
+            'dense' => true,
+            'label' => 'Display_name',
+            'wrapper' => [
+                'class' => 'col-3',
+            ],
+        ],
+    ];
+
+    protected $fillable = ['name', 'display_name', 'created_by', 'updated_by', 'extra'];
+
+    protected $casts = [
+        'extra' => 'array'
+    ];
+}
+
+```
+
+## Controller Management
+
+methods :
+
+-> index
+-> getAll
+-> store
+function used from model are
+mergeRequest :
+is used to add key in request or manipulate change in request send from frontend
+example
+public function mergeRequest(){
+$data['name_of_column'] = 'value';
+// mauplate the field data 
+return $data;
+}
+afterCreateProcess :
+this function is called before creating any thing in model
+
+
+
 
 ## Update YajTech Crud Package With Latest Version
 

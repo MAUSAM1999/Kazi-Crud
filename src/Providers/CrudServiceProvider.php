@@ -14,6 +14,7 @@ class CrudServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerCommands();
+        $this->registerRoutes();
         $this->registerPagination();
     }
 
@@ -77,5 +78,11 @@ class CrudServiceProvider extends ServiceProvider
                 'pageName' => $pageName,
             ]);
         });
+    }
+
+    public function registerRoutes()
+    {
+        // Load the routes from the package
+        $this->loadRoutesFrom(__DIR__ . '/Routes/kazi.php');
     }
 }
