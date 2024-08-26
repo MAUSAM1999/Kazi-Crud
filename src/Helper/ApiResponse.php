@@ -38,13 +38,10 @@ class ApiResponse
         return self::response($data, $status_code);
     }
 
-    public static function onException(Exception $exception, string $message = 'Something went wrong'): JsonResponse
+    public static function onException(Exception $exception, string $message = 'Something went wrong')
     {
         if ($exception != null) {
             /** Throw some exceptions when executed from central */
-            if (tenancy() != null && tenant() != null && isset(tenant()->name)) {
-                $exception_array['Tenant'] = tenant()->name . ' (' . tenant()->id . ')';
-            }
             if (Auth::user() != null) {
                 $user = Auth::user();
                 $exception_array['User'] = $user->name . ' (' . $user->mobile . ')';
