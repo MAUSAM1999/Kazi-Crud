@@ -7,7 +7,6 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use YajTech\Crud\Resources\CommonDropDownResource;
-use function App\Http\Controllers\app;
 
 class Controller extends BaseController
 {
@@ -16,18 +15,37 @@ class Controller extends BaseController
     public function dropdown(Request $request)
     {
         $request->validate([
-            'model' => 'required',
-            'columns' => 'nullable',
+            'model' => 'required|string',
+            'columns' => 'nullable|string',
         ]);
 
-        $model = app($request->model);
-        $model = new $model();
+        $modelClass = $this->getModelClass($request->model);
+
+        if (!class_exists($modelClass)) {
+            return response()->json(['error' => 'Model not found'], 404);
+        }
+
+        $model = new $modelClass();
         $model = $model::initializer();
-        $columns = json_decode($request->columns, true);
-        if ($request->has('columns') && count($columns) > 0) {
+
+        $columns = $request->has('columns') ? json_decode($request->columns, true) : [];
+        if (count($columns) > 0) {
             $model = $model->select($columns);
         }
 
-        return CommonDropDownResource::collection($model->paginates());
+        return CommonDropDownResource::collection($model->paginate());
+    }
+
+    protected function getModelClass($model)
+    {
+        // If the model name is fully qualified, return it as is
+        if (class_exists($model)) {
+            return $model;
+        }
+
+        // Otherwise, prepend the default namespace
+        $namespace = 'App\\Models\\';
+        return $namespace . $model;
     }
 }
+
