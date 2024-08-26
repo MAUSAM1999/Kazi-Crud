@@ -1,5 +1,5 @@
 {
-  "name": "kazi/crud",
+  "name": "yajtech/crud",
   "description": "Yaj Tech solution for Crud. Happy and Quick Code",
   "type": "project",
   "license": "MIT",
@@ -7,7 +7,7 @@
   "require": {},
   "autoload": {
     "psr-4": {
-      "Kazi\\Crud\\": "src/"
+      "YajTech\\Crud\\": "src/"
     }
   }
 }

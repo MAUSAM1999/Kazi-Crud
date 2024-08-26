@@ -1,6 +1,6 @@
 <?php
 
-namespace Kazi\Crud\Services;
+namespace YajTech\Crud\Services;
 
 use Illuminate\Support\Str;
 
@@ -141,8 +141,8 @@ class CrudOperationModelService
 
      use Illuminate\Database\Eloquent\Factories\HasFactory;
      use Illuminate\Database\Eloquent\Model;
-     use Kazi\Crud\Traits\CrudModel;
-     use Kazi\Crud\Traits\CrudEventListener;
+     use YajTech\Crud\Traits\CrudModel;
+     use YajTech\Crud\Traits\CrudEventListener;
      use \Illuminate\Database\Eloquent\SoftDeletes;
 
      class $className extends Model

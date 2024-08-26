@@ -1,8 +1,8 @@
 <?php
 
-namespace Kazi\Crud\Console\Commands;
+namespace YajTech\Crud\Console\Commands;
 
-use Kazi\Crud\Services\CrudOperationService;
+use YajTech\Crud\Services\CrudOperationService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 

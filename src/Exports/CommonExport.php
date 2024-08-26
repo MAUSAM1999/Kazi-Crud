@@ -1,6 +1,6 @@
 <?php
 
-namespace Kazi\Crud\Exports;
+namespace YajTech\Crud\Exports;
 
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;

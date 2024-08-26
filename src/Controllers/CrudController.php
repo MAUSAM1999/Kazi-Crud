@@ -1,13 +1,13 @@
 <?php
 
-namespace Kazi\Crud\Controllers;
+namespace YajTech\Crud\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Str;
-use Kazi\Crud\Exports\CommonExport;
-use Kazi\Crud\Helper\ApiResponse;
-use Kazi\Crud\Helper\GlobalHelper;
-use Kazi\Crud\Traits\Super;
+use YajTech\Crud\Exports\CommonExport;
+use YajTech\Crud\Helper\ApiResponse;
+use YajTech\Crud\Helper\GlobalHelper;
+use YajTech\Crud\Traits\Super;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;

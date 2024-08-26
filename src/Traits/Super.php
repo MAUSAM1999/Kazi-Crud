@@ -1,8 +1,8 @@
 <?php
 
-namespace Kazi\Crud\Traits;
+namespace YajTech\Crud\Traits;
 
-use Kazi\Crud\Helper\ApiResponse;
+use YajTech\Crud\Helper\ApiResponse;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;

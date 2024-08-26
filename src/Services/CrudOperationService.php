@@ -1,6 +1,6 @@
 <?php
 
-namespace Kazi\Crud\Services;
+namespace YajTech\Crud\Services;
 
 use Illuminate\Support\Str;
 
@@ -134,9 +134,9 @@ class CrudOperationService
         }
         if ($methods) {
             $methods = "['" . implode("', '", explode(',', $methods)) . "']";
-            $routeToCheck = "\nKazi\Crud\Helper\CrudRoute::generateRoutes('$modelName', " . $controllerPath . "::class, " . $methods . ");";
+            $routeToCheck = "\nYajTech\Crud\Helper\CrudRoute::generateRoutes('$modelName', " . $controllerPath . "::class, " . $methods . ");";
         } else {
-            $routeToCheck = "\nKazi\Crud\Helper\CrudRoute::generateRoutes('$modelName', " . $controllerPath . "::class);";
+            $routeToCheck = "\nYajTech\Crud\Helper\CrudRoute::generateRoutes('$modelName', " . $controllerPath . "::class);";
         }
 
         // Check if api.php exists as a file, or create it
@@ -149,7 +149,7 @@ class CrudOperationService
             file_put_contents($path, "<?php\n\n");
         }
 
-        $basicRoutePattern = "Kazi\Crud\Helper\CrudRoute::generateRoutes('$modelName', " . $controllerPath . "::class";
+        $basicRoutePattern = "YajTech\Crud\Helper\CrudRoute::generateRoutes('$modelName', " . $controllerPath . "::class";
         $fileContent = str_replace(["\n", "\r"], '', file_get_contents($path));
         if (str_contains($fileContent, $basicRoutePattern)) {
             $this->error("\n{$modelName} Route already exists.");

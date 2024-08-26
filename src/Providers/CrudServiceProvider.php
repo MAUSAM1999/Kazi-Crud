@@ -1,10 +1,10 @@
 <?php
 
-namespace Kazi\Crud\Providers;
+namespace YajTech\Crud\Providers;
 
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
-use Kazi\Crud\Console\Commands\GenerateCrudCommand;
+use YajTech\Crud\Console\Commands\GenerateCrudCommand;
 
 class CrudServiceProvider extends ServiceProvider
 {

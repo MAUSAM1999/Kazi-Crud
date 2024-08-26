@@ -1,6 +1,6 @@
 <?php
 
-namespace Kazi\Crud\Helper;
+namespace YajTech\Crud\Helper;
 
 class GlobalHelper
 {

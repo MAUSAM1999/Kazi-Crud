@@ -1,13 +1,13 @@
-# Kazi Crud
+# YajTech Crud
 
-**Kazi Crud** is a Laravel package designed to streamline CRUD operations with customizable options for controllers,
+**YajTech Crud** is a Laravel package designed to streamline CRUD operations with customizable options for controllers,
 models, and event listeners. This README will guide you through the installation, setup, and usage of the package.
 
 ## Installation and Setup
 
 ### Step 1: Add the Repository
 
-To include the Kazi Crud package, first add the repository to your `composer.json` file:
+To include the YajTech Crud package, first add the repository to your `composer.json` file:
 
 ```json
 "repositories": [
@@ -23,7 +23,7 @@ To include the Kazi Crud package, first add the repository to your `composer.jso
 Run the following command in your terminal to install the package:
 
 ``` bash
-composer require kazi/crud
+composer require yajtech/crud
 ```
 
 ### Step 3: Register api.php file path in bootstrap/app.php
@@ -68,7 +68,7 @@ After installation, register the service provider in your config/app.php file:
 'providers' => [
     // Other Service Providers
 
-    \Kazi\Crud\Providers\CrudServiceProvider::class,
+    \YajTech\Crud\Providers\CrudServiceProvider::class,
 ],
 ```
 
@@ -81,8 +81,8 @@ After installation, register the service provider in your bootstrap/providers.ph
 return [
     App\Providers\AppServiceProvider::class,
     
-    // kazi service providers
-    \Kazi\Crud\Providers\CrudServiceProvider::class
+    // YajTech Crud service providers
+    \YajTech\Crud\Providers\CrudServiceProvider::class
 ];
 
 ```
@@ -132,8 +132,8 @@ use Trait in each module, these below trait helps for filter, search and dynamic
 
 namespace App\Models;
 
-use Kazi\Crud\Traits\CrudEventListener;
-use Kazi\Crud\Traits\CrudModel;
+use YajTech\Crud\Traits\CrudEventListener;
+use YajTech\Crud\Traits\CrudModel;
 
 class ClassName extends Model
 {
@@ -285,7 +285,7 @@ const TABLE = [
 - `export_button` : Enables or disables the "Export" button.
 - `filter_button` : Enables or disables the "Filter" button.
 
-## Update Kazi Crud Package With Latest Version
+## Update YajTech Crud Package With Latest Version
 
 ```bash
 Composer Update
@@ -293,4 +293,5 @@ Composer Update
 
 ### Additional Documentation
 
-For more detailed usage and advanced features, refer to the package's full documentation [here](https://sociair.com/).
+For more detailed usage and advanced features, refer to the package's full
+documentation [here](https://yajtechnologies.com/).

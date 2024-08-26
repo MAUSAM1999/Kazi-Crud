@@ -1,6 +1,6 @@
 <?php
 
-namespace Kazi\Crud\Traits;
+namespace YajTech\Crud\Traits;
 
 use Illuminate\Support\Str;
 

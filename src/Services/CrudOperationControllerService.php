@@ -1,6 +1,6 @@
 <?php
 
-namespace Kazi\Crud\Services;
+namespace YajTech\Crud\Services;
 
 use Illuminate\Support\Str;
 
@@ -50,7 +50,7 @@ class CrudOperationControllerService
 
 namespace $namespace;
 
-use Kazi\Crud\Controllers\CrudController;
+use YajTech\Crud\Controllers\CrudController;
 use $model;
 use $list_resource;
 use $detail_resource;

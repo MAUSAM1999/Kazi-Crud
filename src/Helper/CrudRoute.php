@@ -1,6 +1,6 @@
 <?php
 
-namespace Kazi\Crud\Helper;
+namespace YajTech\Crud\Helper;
 
 use Illuminate\Support\Facades\Route;
 

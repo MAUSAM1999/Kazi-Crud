@@ -1,6 +1,6 @@
 <?php
 
-namespace Kazi\Crud\Services;
+namespace YajTech\Crud\Services;
 
 use Illuminate\Support\Str;
 
