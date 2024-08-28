@@ -1,0 +1,24 @@
+<?php
+
+namespace {{ namespace }};
+
+use YajTech\Crud\Controllers\CrudController;
+use {{ model }};
+use {{ listResource }};
+use {{ detailResource }};
+use {{ createRequest }};
+use {{ updateRequest }};
+
+class {{ className }} extends CrudController
+{
+    public function __construct()
+    {
+        parent::__construct(
+            {{ modelParsed }}::class,
+            {{ detailResourceParsed }}::class,
+            {{ listResourceParsed }}::class,
+            {{ createRequestParsed }}::class,
+            {{ updateRequestParsed }}::class
+        );
+    }
+}

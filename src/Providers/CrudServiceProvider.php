@@ -2,12 +2,23 @@
 
 namespace YajTech\Crud\Providers;
 
-use Illuminate\Pagination\Paginator;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\ServiceProvider;
 use YajTech\Crud\Console\Commands\GenerateCrudCommand;
+use YajTech\Crud\Traits\ProviderManager;
 
 class CrudServiceProvider extends ServiceProvider
 {
+    use ProviderManager;
+
+    /**
+     * Register bindings in the container.
+     */
+    public function register(): void
+    {
+        $this->bindInterfaces();
+    }
+
     /**
      * Boot the application events.
      */
@@ -15,74 +26,38 @@ class CrudServiceProvider extends ServiceProvider
     {
         $this->registerCommands();
         $this->registerRoutes();
-        $this->registerPagination();
+        $this->registerPaginationMacros();
     }
 
     /**
-     * Register commands in the format of Command::class
+     * Register the CRUD command.
      */
     protected function registerCommands(): void
     {
         $this->commands([
-            GenerateCrudCommand::class
+            GenerateCrudCommand::class,
         ]);
     }
 
     /**
-     * Register and manage pagination
+     * Register custom pagination macros.
      */
-    protected function registerPagination(): void
+    protected function registerPaginationMacros(): void
     {
-        \Illuminate\Database\Eloquent\Builder::macro('paginates', function (int $perPage = null, $columns = ['*'], $pageName = 'page', int $page = null) {
-            request()->validate(['rowsPerPage' => 'nullable|numeric|gte:0|lte:1000000000000000000']);
-
-            $page = $page ?: Paginator::resolveCurrentPage($pageName);
-
-            $total = $this->toBase()->getCountForPagination();
-
-            if ($perPage === null) {
-                $rows = (int)request()->query('rowsPerPage', 20);
-                if ($rows === 0) {
-                    $perPage = $total;
-                } else {
-                    $perPage = $rows;
-                }
-            }
-            $results = $total
-                ? $this->forPage($page, $perPage)->get($columns)
-                : $this->model->newCollection();
-
-            return $this->paginator($results, $total, $perPage, $page, [
-                'path' => Paginator::resolveCurrentPath(),
-                'pageName' => $pageName,
-            ]);
+        Builder::macro('paginates', function (int $perPage = null, $columns = ['*'], $pageName = 'page', int $page = null) {
+            return $this->customPaginator($perPage, $columns, $pageName, $page, false);
         });
 
-        \Illuminate\Database\Eloquent\Builder::macro('simplePaginates', function (int $perPage = null, $columns = ['*'], $pageName = 'page', $page = null) {
-            request()->validate(['rowsPerPage' => 'nullable|numeric|gte:0|lte:1000000000000000000']);
-            $page = $page ?: Paginator::resolveCurrentPage($pageName);
-
-            if ($perPage === null) {
-                $rows = (int)request()->query('rowsPerPage', 20);
-                if ($rows === 0) {
-                    $perPage = $this->count();
-                } else {
-                    $perPage = $rows;
-                }
-            }
-
-            $this->offset(($page - 1) * $perPage)->limit($perPage + 1);
-
-            return $this->simplePaginator($this->get($columns), $perPage, $page, [
-                'path' => Paginator::resolveCurrentPath(),
-                'pageName' => $pageName,
-            ]);
+        Builder::macro('simplePaginates', function (int $perPage = null, $columns = ['*'], $pageName = 'page', int $page = null) {
+            return $this->customPaginator($perPage, $columns, $pageName, $page, true);
         });
     }
 
-    public function registerRoutes()
+    /**
+     * Load package routes.
+     */
+    protected function registerRoutes(): void
     {
-        // Load the routes from the package
-        $this->loadRoutesFrom(__DIR__ . '/Routes/kazi.php');
+        $this->loadRoutesFrom(__DIR__ . '/../Routes/api.php');
     }
 }

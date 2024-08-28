@@ -1,0 +1,30 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use YajTech\Crud\Traits\CrudModel;
+use YajTech\Crud\Traits\CrudEventListener;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class  {{ className }} extends Model
+{
+    use HasFactory, CrudModel, SoftDeletes, CrudEventListener;
+
+    const COLUMNS =  {{ stringColumns }};
+    const FIELDS = {{ stringFields }};
+    const TABLE = [
+     'add_button' => true,
+     'refresh_button' => true,
+     'export_button' => true,
+     'filter_button' => true,
+    ];
+    const FILTERS = {{ stringFilters }};
+
+    protected $fillable = [ {{ fillableFields }} ];
+
+    protected $casts = [
+        'extra' => 'array'
+    ];
+}

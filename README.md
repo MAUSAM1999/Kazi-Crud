@@ -285,7 +285,7 @@ const TABLE = [
 - `export_button` : Enables or disables the "Export" button.
 - `filter_button` : Enables or disables the "Filter" button.
 
-### Model Example for Kazi
+### Model Example for YajTech
 
 ```php
 <?php
@@ -294,11 +294,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Kazi\Crud\Traits\CrudModel;
-use Kazi\Crud\Traits\CrudEventListener;
+use YajTech\Crud\Traits\CrudModel;
+use YajTech\Crud\Traits\CrudEventListener;
 use \Illuminate\Database\Eloquent\SoftDeletes;
 
-class Kazi extends Model
+class YajTech extends Model
 {
     use HasFactory, CrudModel, SoftDeletes, CrudEventListener;
 
