@@ -1,4 +1,4 @@
-# YajTech Crud v1.0.0
+# YajTech Crud v1.0.3
 
 **YajTech Crud** is a Laravel package designed to streamline CRUD operations with customizable options for controllers,
 models, and event listeners. This README will guide you through the installation, setup, and usage of the package.
