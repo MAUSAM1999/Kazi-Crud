@@ -34,14 +34,6 @@ class RouteService implements RouteServiceInterface
             $routeToCheck = "\nYajTech\Crud\Helper\CrudRoute::generateRoutes('$modelName', " . $controllerPath . "::class);";
         }
 
-        // Create the routes file if it doesn't exist.
-        if (!file_exists($path)) {
-            if (!is_dir(dirname($path))) {
-                mkdir(dirname($path), 0777, true);
-            }
-            file_put_contents($path, "<?php\n\n");
-        }
-
         // Append the route if it doesn't already exist in the file.
         if (!str_contains(file_get_contents($path), $routeToCheck)) {
             file_put_contents($path, $routeToCheck, FILE_APPEND);

@@ -26,11 +26,16 @@ Run the following command in your terminal to install the package:
 composer require yajtech/crud
 ```
 
-### Step 3: Register api.php file path in bootstrap/app.php
+### Step 3:  Install API For Laravel 11 and above only ( routes/api.php not found )
 
-Laravel 11 above :
+``` bash
+php artisan install:api
+```
 
-After installation, register the service provider in your bootstrap/providers.php file:
+- create api.php in routes/api.php
+- Install and manage Laravel/sanctum
+
+After installation, register the service provider in your bootstrap/app.php should be like below:
 
 ```php
 
@@ -42,9 +47,9 @@ use Illuminate\Foundation\Configuration\Middleware;
 
 return Application::configure(basePath: dirname(DIR))
     ->withRouting(
-        web: DIR.'/../routes/web.php',
-        api: DIR.'/../routes/api.php', // add this file here so that application can register api.php as route file
-        commands: DIR.'/../routes/console.php',
+        web: __DIR__ .'/../routes/web.php',
+        api: __DIR__.'/../routes/api.php', // add this file here so that application can register api.php as route file
+        commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {

@@ -10,9 +10,12 @@ use YajTech\Crud\Interfaces\{
     ControllerServiceInterface,
     RouteServiceInterface
 };
+use YajTech\Crud\Traits\PathManager;
 
 class CrudService
 {
+    use PathManager;
+
     /**
      * Initialize the service classes via constructor injection.
      *
@@ -221,7 +224,12 @@ class CrudService
     public function handleRoute(string $name, string $pluralModel, array $fields, mixed $methods = null, ?string $module = null): void
     {
         $this->info("Creating route...");
-        if ($this->routeService->routeExists($name, $module)) {
+        $path = $this->getFullPath('api.php', $module, 'route');
+        // check does api.php
+        if (!file_exists($path)) {
+            $this->info("Route File api.php not found. Path : $path");
+            $this->info("Read Docs For Solution");
+        } else if ($this->routeService->routeExists($name, $module)) {
             $moduleText = $module ? " (Module: $module)" : '';
             $this->info("Route '{$name}' already exists.$moduleText");
         } else {
