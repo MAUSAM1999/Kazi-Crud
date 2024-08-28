@@ -389,28 +389,6 @@ class YajTech extends Model
 
 ```
 
-## Controller Management
-
-methods :
-
--> index
--> getAll
--> store
-function used from model are
-mergeRequest :
-is used to add key in request or manipulate change in request send from frontend
-example
-public function mergeRequest(){
-$data['name_of_column'] = 'value';
-// mauplate the field data 
-return $data;
-}
-afterCreateProcess :
-this function is called before creating any thing in model
-
-
-
-
 ## Update YajTech Crud Package With Latest Version
 
 ```bash
