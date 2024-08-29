@@ -37,7 +37,6 @@ trait ProviderManager
         }
     }
 
-
     /**
      * Create a custom paginator.
      */
