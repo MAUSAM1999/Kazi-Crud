@@ -40,20 +40,6 @@ class CrudServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register custom pagination macros.
-     */
-    protected function registerPaginationMacros(): void
-    {
-        Builder::macro('paginates', function (int $perPage = null, $columns = ['*'], $pageName = 'page', int $page = null) {
-            return $this->customPaginator($perPage, $columns, $pageName, $page, false);
-        });
-
-        Builder::macro('simplePaginates', function (int $perPage = null, $columns = ['*'], $pageName = 'page', int $page = null) {
-            return $this->customPaginator($perPage, $columns, $pageName, $page, true);
-        });
-    }
-
-    /**
      * Load package routes.
      */
     protected function registerRoutes(): void
