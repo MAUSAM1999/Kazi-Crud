@@ -102,7 +102,7 @@ trait CrudModel
             });
         }
 
-        return $model->where($columns, 'LIKE', '%' . $value . '%');
+        return $model->where((count($columns) > 0 ? $columns : 'name'), 'LIKE', '%' . $value . '%');
     }
 
     protected static function applyWhereHasFilter($model, $query, $column, $value)

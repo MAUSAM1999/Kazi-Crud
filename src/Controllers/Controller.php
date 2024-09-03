@@ -33,7 +33,7 @@ class Controller extends BaseController
         $columns = $request->has('columns') ? json_decode($request->columns, true) : [];
 
         if ($request->query && $request->query != '') {
-            $model = $this->applyQueryFilter($model, count($columns) > 0 ? $columns : 'name', $request->query);
+            $model = $this->applyQueryFilter($model, $columns, $request->query);
         }
 
         if (count($columns) > 0) {
