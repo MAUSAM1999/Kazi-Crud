@@ -383,6 +383,22 @@ class YajTech extends Model
                 'class' => 'col-3',
             ],
         ],
+         [
+            'name' => 'role',
+            'column' => 'id',
+            'type' => 'select_from_model',
+            'label' => 'Role',
+            'attribute' => 'name',
+            'relation' => 'whereHas:where',
+            'query' => 'roles',
+            'dense' => true,
+            'wrapper' => [
+                'class' => 'col-3'
+            ],
+            'multiple' => false,
+            'model' => "App\Models\Role",
+            'columns' => ['id', 'name'], // optional if empty then return all
+        ]
     ];
 
     protected $fillable = ['name', 'display_name', 'created_by', 'updated_by', 'extra'];
