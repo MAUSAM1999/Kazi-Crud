@@ -26,6 +26,7 @@ class Controller extends BaseController
             return response()->json(['error' => 'Model not found'], 404);
         }
 
+
         $model = new $modelClass();
         $model = $model::initializer();
 
