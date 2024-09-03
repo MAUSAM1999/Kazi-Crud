@@ -117,7 +117,7 @@ class FieldFormatHelper
         foreach ($fillableFieldsCustom as $field) {
             $filters[] = [
                 'name' => strtolower($field),
-                'column' => strtolower($field),
+                'columns' => strtolower($field),
                 'type' => 'text',
                 'relation' => 'where',
                 'dense' => true,
