@@ -31,13 +31,19 @@ class Controller extends BaseController
 
         $columns = $request->has('columns') ? json_decode($request->columns, true) : [];
 
-        if ($request->query && $request->query != '') {
-            $value = $request->query;
+        if ($request->has('query') && $request->query != '') {
+            $value = $request->get('query');
+
             $model = $model->where(function ($query) use ($columns, $value) {
                 foreach ($columns as $index => $column) {
-                    $query->{$index === 0 ? 'where' : 'orWhere'}($column, 'LIKE', '%' . $value . '%');
+                    if ($index === 0) {
+                        $query->where($column, 'LIKE', '%' . $value . '%');
+                    } else {
+                        $query->orWhere($column, 'LIKE', '%' . $value . '%');
+                    }
                 }
             });
+
         }
 
         if (count($columns) > 0) {

@@ -97,7 +97,11 @@ trait CrudModel
         if (is_array($columns)) {
             return $model->where(function ($query) use ($columns, $value) {
                 foreach ($columns as $index => $column) {
-                    $query->{$index === 0 ? 'where' : 'orWhere'}($column, 'LIKE', '%' . $value . '%');
+                    if ($index === 0) {
+                        $query->where($column, 'LIKE', '%' . $value . '%');
+                    } else {
+                        $query->orWhere($column, 'LIKE', '%' . $value . '%');
+                    }
                 }
             });
         }
