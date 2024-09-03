@@ -7,11 +7,10 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use YajTech\Crud\Resources\CommonDropDownResource;
-use YajTech\Crud\Traits\CrudModel;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, ValidatesRequests, CrudModel;
+    use AuthorizesRequests, ValidatesRequests;
 
     public function dropdown(Request $request)
     {
@@ -33,7 +32,12 @@ class Controller extends BaseController
         $columns = $request->has('columns') ? json_decode($request->columns, true) : [];
 
         if ($request->query && $request->query != '') {
-            $model = $this->applyQueryFilter($model, $columns, $request->query);
+            $value = $request->query;
+            $model = $model->where(function ($query) use ($columns, $value) {
+                foreach ($columns as $index => $column) {
+                    $query->{$index === 0 ? 'where' : 'orWhere'}($column, 'LIKE', '%' . $value . '%');
+                }
+            });
         }
 
         if (count($columns) > 0) {
